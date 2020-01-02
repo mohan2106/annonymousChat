@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingLayout">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Profile" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/gradient_back"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tap below to change image"
+            android:textColor="#ffffff"
+            android:textSize="14sp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/register_image"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            app:civ_border_color="#ffffff"
+            app:civ_border_width="2dp"
+            android:layout_marginTop="16sp"
+            android:src="@drawable/profile_image" />
+
+        <EditText
+            android:id="@+id/register_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="32sp"
+            android:drawableRight="@drawable/ic_account_circle_black_24dp"
+            android:drawableTint="@color/colorGray"
+            android:layout_marginEnd="16sp"
+            android:background="@drawable/edit_text_back"
+            android:hint="Name"
+            android:inputType="text"
+            android:padding="16sp" />
+        />
+
+        <EditText
+            android:id="@+id/register_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:drawableRight="@drawable/ic_edit_black_24dp"
+            android:drawableTint="@color/colorGray"
+            android:layout_marginTop="16sp"
+            android:layout_marginEnd="16sp"
+            android:background="@drawable/edit_text_back"
+            android:hint="Sattus"
+            android:inputType="textEmailAddress"
+            android:padding="16sp" />
+
+
+        <Button
+            android:id="@+id/update_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:layout_marginTop="32sp"
+            android:layout_marginEnd="16sp"
+            android:background="@drawable/button_border"
+            android:text="Update Profile"
+            android:textAllCaps="false"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

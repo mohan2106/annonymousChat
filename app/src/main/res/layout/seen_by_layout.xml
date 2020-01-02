@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/single_image"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="9dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorWhite"
+        android:src="@drawable/profile_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/single_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/online"
+        app:layout_constraintStart_toEndOf="@+id/single_image"
+        app:layout_constraintTop_toTopOf="@+id/single_image" />
+
+    <TextView
+        android:id="@+id/single_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/single_image"
+        app:layout_constraintTop_toBottomOf="@+id/single_user_name" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="0dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/single_image"
+        app:layout_constraintTop_toBottomOf="@+id/single_image" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/online"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/single_status"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/single_user_name"
+        android:src="@drawable/online" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

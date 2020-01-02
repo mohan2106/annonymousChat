@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_back"
+    android:orientation="vertical"
+    tools:context=".SplashScreen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Miitr"
+            android:textSize="70sp"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I am a"
+                android:textColor="@color/colorWhite"
+                android:textSize="25sp"
+                android:textStyle="bold"/>
+            <Button
+                android:id="@+id/btn_student"
+                android:layout_marginTop="15sp"
+                android:layout_width="200sp"
+                android:layout_height="40sp"
+                android:textSize="20sp"
+                android:text="Student"
+                android:background="@drawable/button_back_yellow"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                />
+            <Button
+                android:id="@+id/btn_mentor"
+                android:layout_marginTop="15sp"
+                android:layout_width="200sp"
+                android:textSize="20sp"
+                android:layout_height="40sp"
+                android:text="Mentor"
+                android:background="@drawable/button_back_yellow"
+                android:textColor="@color/colorWhite"
+                android:textAllCaps="false"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

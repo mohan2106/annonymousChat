@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:id="@+id/message_background"
+    android:paddingLeft="15sp"
+    android:paddingRight="15sp"
+    android:paddingVertical="10sp"
+    android:layout_margin="3sp"
+    android:background="@drawable/message_get"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/recieved_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@color/colorBlack"
+        android:text="test message"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time_receivedMessage"
+        android:layout_width="wrap_content"
+        android:textSize="10sp"
+        android:layout_height="wrap_content"
+        android:text="time"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recieved_message"
+        app:layout_constraintTop_toBottomOf="@+id/recieved_message" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

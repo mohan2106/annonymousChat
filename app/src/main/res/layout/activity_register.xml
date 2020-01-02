@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/gradient_back"
+    android:layout_height="match_parent"
+    tools:context=".registerActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create a new Account"
+        android:textColor="#ffffff"
+        android:textSize="24sp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/register_image"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp"
+        android:layout_marginTop="16sp"
+        android:src="@drawable/profile_image" />
+
+    <EditText
+        android:id="@+id/register_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/edit_text_back"
+        android:hint="Name"
+        android:inputType="text"
+        android:padding="16sp" />
+    />
+
+    <EditText
+        android:id="@+id/register_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/edit_text_back"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="16sp" />
+
+    <EditText
+        android:id="@+id/register_possword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/edit_text_back"
+        android:hint="Password"
+        android:inputType="textVisiblePassword"
+        android:padding="16sp" />
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/edit_text_back"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/back_to_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/button_border"
+        android:text="Back to login Page?"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_marginTop="24sp"
+        android:indeterminate="true"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_back"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    tools:context=".startActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Welcome back to\nAnnonymous Chat App"
+        android:layout_marginBottom="16sp"
+        android:textColor="#ffffff"
+        android:textSize="24sp"/>
+
+    <EditText
+        android:id="@+id/login_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="25sp"
+        android:layout_marginEnd="16sp"
+        android:layout_marginBottom="8sp"
+        android:background="@drawable/edit_text_back"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="15sp" />
+
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="8sp"
+        android:layout_marginEnd="16sp"
+        android:layout_marginBottom="8sp"
+        android:background="@drawable/edit_text_back"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="15sp" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="8sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/edit_text_back"
+        android:text="Login to my account"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/signup_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:background="@drawable/button_border"
+        android:text="Need a new Account?"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_login"
+        android:layout_marginTop="32sp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+</LinearLayout>
