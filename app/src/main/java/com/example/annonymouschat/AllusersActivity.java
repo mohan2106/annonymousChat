@@ -66,14 +66,11 @@ public class AllusersActivity extends AppCompatActivity {
                     if(!mAuth.getUid().equals(user.child("id").getValue().toString())){
                         itemList.add(new allUserClass(user.child("name").getValue().toString(), user.child("thumb_image").getValue().toString(),
                                 user.child("id").getValue().toString(), user.child("status").getValue().toString(),user.child("online").getValue().toString()));
-
                     }
-
                 }
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(AllusersActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
@@ -89,7 +86,6 @@ public class AllusersActivity extends AppCompatActivity {
 //                        if(!mAuth.getUid().equals(document.get("id").toString())) {
 //                            itemList.add(new allUserClass(document.get("name").toString(), document.get("thumb_image").toString(), document.get("id").toString(), document.get("status").toString()));
 //                        }
-////                        Log.d(TAG, document.getId() + " => " + document.getData());
 //                    }
 //                    adapter.notifyDataSetChanged();
 //

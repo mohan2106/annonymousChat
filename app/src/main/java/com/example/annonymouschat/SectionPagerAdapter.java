@@ -43,9 +43,9 @@ class SectionPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return "MENTORS";
             case 1:
-                return "CONVERSATIONS";
+                return "ALL THREADS";
             case 2:
-                return "POSTS";
+                return "YOURS";
             default:
                 return null;
         }

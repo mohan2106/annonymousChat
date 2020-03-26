@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,8 +24,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -84,29 +89,60 @@ public class startActivity extends AppCompatActivity {
 
                                     if (task.isSuccessful()){
                                         String token_id= FirebaseInstanceId.getInstance().getToken();
-                                        String current_user=mAuth.getCurrentUser().getUid();
+                                        final String current_user=mAuth.getCurrentUser().getUid();
 
                                         Map<String,Object> data=new HashMap<>();
                                         data.put("token_id",token_id);
                                         databaseReference.child(current_user).updateChildren(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                progressBar.setVisibility(View.GONE);
-                                                dialog.dismiss();
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                    Intent intent = new Intent(startActivity.this,MainActivity.class);
-                                                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(startActivity.this).toBundle());
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                                                    finish();
-                                                }
-                                                else{
-                                                    Intent intent = new Intent(startActivity.this,MainActivity.class);
-                                                    startActivity(intent);
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+                                                //final String org = sp.getString("org","NULL");
+//        final String userid = sp.getString("id",mAuth.getUid());
 
-                                                    finish();
-                                                }
+
+//            Toast.makeText(this, "Shared Preference is empty", Toast.LENGTH_SHORT).show();
+                                                databaseReference.child(current_user).addValueEventListener(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        SharedPreferences sp2 = getSharedPreferences("User", Context.MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor = sp2.edit();
+                                                        editor.putString("name", dataSnapshot.child("name").getValue().toString());
+                                                        editor.putString("email", dataSnapshot.child("email").getValue().toString());
+                                                        editor.putString("id", mAuth.getUid());
+                                                        editor.putInt("image", Integer.parseInt(dataSnapshot.child("intImage").getValue().toString()));
+                                                        editor.putString("org", dataSnapshot.child("organisation").getValue().toString());
+                                                        editor.putBoolean("iscouncellor", Boolean.parseBoolean(dataSnapshot.child("isCouncellor").getValue().toString()));
+                                                        editor.apply();
+
+                                                        progressBar.setVisibility(View.GONE);
+                                                        dialog.dismiss();
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                            Intent intent = new Intent(startActivity.this,MainActivity.class);
+                                                            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(startActivity.this).toBundle());
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                                                            finish();
+                                                        }
+                                                        else{
+                                                            Intent intent = new Intent(startActivity.this,MainActivity.class);
+                                                            startActivity(intent);
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                                                            finish();
+                                                        }
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
+
+
+
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
                                             @Override

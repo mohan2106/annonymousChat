@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
     private ArrayList<friendsClass> itemList;
     private Context context;
     private DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference().child("User");
-    private String name="",image="";
+
 
     public FriendsAdapter(ArrayList<friendsClass> itemList, Context context) {
         this.itemList = itemList;
@@ -45,34 +46,34 @@ class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         friendsClass ne = itemList.get(position);
         final String key = ne.getKey();
-        name="";
-        image="";
+
+
+
+        SharedPreferences sp = context.getSharedPreferences("User", Context.MODE_PRIVATE);
+        final String org = sp.getString("org","NULL");
+
         databaseReference.child(ne.getKey()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                String name="";
+                Integer image;
                 name = dataSnapshot.child("name").getValue().toString();
-                image = dataSnapshot.child("thumb_image").getValue().toString();
+                image = Integer.parseInt(dataSnapshot.child("intImage").getValue().toString());
                 holder.nm.setText(name);
-                holder.st.setText(dataSnapshot.child("status").getValue().toString());
+//                holder.st.setText(dataSnapshot.child("status").getValue().toString());
 
                 if(dataSnapshot.child("online").getValue().toString().equals("true")){
                     holder.onl.setVisibility(View.VISIBLE);
                 }else{
                     holder.onl.setVisibility(View.GONE);
                 }
-                Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE).placeholder(R.drawable.profile_image).into(holder.img, new Callback() {
-                    @Override
-                    public void onSuccess() {
+                holder.img.setImageResource(image);
 
-                    }
-                    @Override
-                    public void onError(Exception e) {
-                        Picasso.get().load(image).placeholder(R.drawable.profile_image).into(holder.img);
-                    }
-                });
+                itemList.get(position).setName(name);
+                itemList.get(position).setImg(image);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -83,8 +84,9 @@ class FriendsAdapter extends RecyclerView.Adapter<FriendsAdapter.ViewHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(context,chatActivity.class);
                 intent.putExtra("id",key);
-                intent.putExtra("name",name);
-                intent.putExtra("image",image);
+                intent.putExtra("name",itemList.get(position).getName());
+                intent.putExtra("image",String.valueOf(itemList.get(position).getImg()));
+                intent.putExtra("org",org);
                 context.startActivity(intent);
 //                CharSequence options[] = new CharSequence[]{"Open Profile","Send Message"};
 //                AlertDialog.Builder builder = new AlertDialog.Builder(context);

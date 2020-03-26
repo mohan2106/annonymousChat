@@ -10,8 +10,10 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,14 +28,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager pager;
     private SectionPagerAdapter mSectionPagerAdapter;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference quickMessage;
     private DatabaseReference openChat;
     private TabLayout tabLayout;
@@ -60,24 +68,69 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null){
-            startActivity(new Intent(MainActivity.this,startActivity.class));
+        if(mAuth.getUid() == null){
             finish();
+            startActivity(new Intent(MainActivity.this,startActivity.class));
+
         }else{
             databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(mAuth.getUid());
             databaseReference.child("online").setValue("true");
         }
+
+//        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+//        final String org = sp.getString("org","NULL");
+////        final String userid = sp.getString("id",mAuth.getUid());
+//
+//
+////            Toast.makeText(this, "Shared Preference is empty", Toast.LENGTH_SHORT).show();
+//            databaseReference2.child("User").child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    SharedPreferences sp2 = getSharedPreferences("User", Context.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = sp2.edit();
+//                    editor.putString("name", dataSnapshot.child("name").getValue().toString());
+//                    editor.putString("email", dataSnapshot.child("email").getValue().toString());
+//                    editor.putString("id", mAuth.getUid());
+//                    editor.putInt("image", Integer.parseInt(dataSnapshot.child("intImage").getValue().toString()));
+//                    editor.putString("org", dataSnapshot.child("organisation").getValue().toString());
+//                    editor.putBoolean("iscouncellor", Boolean.parseBoolean(dataSnapshot.child("isCouncellor").getValue().toString()));
+//                    editor.apply();
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
+
+
 //        updateUI(currentUser);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if(mAuth.getUid() != null){
-            databaseReference.child("online").setValue("false");
-            databaseReference.child("lastSeen").setValue(ServerValue.TIMESTAMP);
-        }
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if(mAuth.getUid() != null){
+//            databaseReference.child("online").setValue("false");
+//            databaseReference.child("lastSeen").setValue(ServerValue.TIMESTAMP);
+//        }
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        databaseReference.child("online").setValue("true");
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        databaseReference.child("online").setValue("false");
+//        databaseReference.child("lastSeen").setValue(ServerValue.TIMESTAMP);
+//    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,8 +148,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitle("Baatein");
         fab1 = findViewById(R.id.fab_1);
-        fab2 = findViewById(R.id.fab_2);
-        fab3 = findViewById(R.id.fab3);
+//        fab2 = findViewById(R.id.fab_2);
+//        fab3 = findViewById(R.id.fab3);
+
+        //================================testins shared Preference
+        SharedPreferences sp = getSharedPreferences("User", Context.MODE_PRIVATE);
+        final String org = sp.getString("name","NULL");
+
+
+        //========================================================
 
         dialog = new ProgressDialog(this,R.style.MyAlertDialogStyle);
         quickMessage = FirebaseDatabase.getInstance().getReference().child("quickMessage");
@@ -109,25 +169,30 @@ public class MainActivity extends AppCompatActivity {
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animate();
+//                animate();
+                startActivity(new Intent(MainActivity.this,writeThread.class));
+//                startActivity(new Intent(MainActivity.this,profileImages.class));
+
             }
         });
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animate();
-                showAlertDialogButtonClicked(1);
-//                Toast.makeText(MainActivity.this, "Only councellors", Toast.LENGTH_SHORT).show();
-            }
-        });
-        fab3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                animate();
-                showAlertDialogButtonClicked(2);
-//                Toast.makeText(MainActivity.this, "All Mentors", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        fab2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                animate();
+////                showAlertDialogButtonClicked(1);
+//                startActivity(new Intent(MainActivity.this,writeThread.class));
+////                Toast.makeText(MainActivity.this, "Only councellors", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        fab3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                animate();
+////                showAlertDialogButtonClicked(2);
+//                startActivity(new Intent(MainActivity.this,writeThread.class));
+////                Toast.makeText(MainActivity.this, "All Mentors", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         tabLayout = findViewById(R.id.main_tab);
         pager = findViewById(R.id.main_viewPager);
@@ -153,13 +218,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this,startActivity.class));
             finish();
         }else if(id == R.id.main_setting){
-            startActivity(new Intent(MainActivity.this,SettingLayout.class));
-        }else if(id == R.id.main_allUsers){
-            startActivity(new Intent(MainActivity.this,AllusersActivity.class));
+//            startActivity(new Intent(MainActivity.this,SettingLayout.class));
+            Toast.makeText(this, "Setting page is not working at this time", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 
     private void animate(){
         if(isOpen){

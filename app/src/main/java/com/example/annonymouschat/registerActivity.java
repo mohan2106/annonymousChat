@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -58,15 +59,18 @@ public class registerActivity extends AppCompatActivity {
     private StorageReference mStorage= FirebaseStorage.getInstance().getReference().child("images");
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();
     private FirebaseFirestore firestore=FirebaseFirestore.getInstance();
+    public static Activity rA;
     private DatabaseReference databaseReference;
     private ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
+        rA = this;
+        Intent in = getIntent();
+        Integer profImg = R.drawable.c1;
+        profImg = in.getIntExtra("profImg",R.drawable.c1);
         email=(EditText)findViewById(R.id.register_status);
         name=(EditText)findViewById(R.id.register_name);
         password=(EditText)findViewById(R.id.register_possword);
@@ -83,7 +87,7 @@ public class registerActivity extends AppCompatActivity {
                 finish();
             }
         });
-        image.setOnClickListener(new View.OnClickListener() {
+        /*image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
@@ -91,12 +95,41 @@ public class registerActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent,"Select Image"),PICK_IMAGE);
             }
+        });*/
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(registerActivity.this,profileImages.class));
+            }
         });
+        final Integer profImg2 = profImg;
+        image.setImageResource(profImg);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                if(imageUri!=null){
+                //============================================================================Sending to select university page first
+
+                final String username=name.getText().toString();
+                final String userEmail=email.getText().toString();
+                String usserPassword=password.getText().toString();
+
+                if(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(usserPassword)){
+                    Intent intent = new Intent(registerActivity.this,UniversityActivity.class);
+                    intent.putExtra("image",profImg2);
+                    intent.putExtra("email",userEmail);
+                    intent.putExtra("name",username);
+                    intent.putExtra("password",usserPassword);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(registerActivity.this, "Please Provide Valid Information", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+                //========================================================================
+
+                /*if(imageUri!=null){
                     final String username=name.getText().toString();
                     final String userEmail=email.getText().toString();
                     String usserPassword=password.getText().toString();
@@ -114,59 +147,6 @@ public class registerActivity extends AppCompatActivity {
                                             dialog.setMessage("Uploading your details...");
                                             File thumb_file = new File(resultUri.getPath());
                                             final FirebaseUser user = mAuth.getCurrentUser();
-//                                            final StorageReference user_profile=mStorage.child(user+".jpg");
-//                                            user_profile.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-//                                                @Override
-//                                                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-//                                                    user_profile.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                                                        @Override
-//                                                        public void onSuccess(Uri uri) {
-//                                                            final String image_download=uri.toString();
-//                                                            String token_id= FirebaseInstanceId.getInstance().getToken();
-//                                                            Map<String,Object> data=new HashMap<>();
-//                                                            data.put("name",username);
-//                                                            data.put("email",userEmail);
-//                                                            data.put("image",image_download);
-//                                                            data.put("token_id",token_id);
-//                                                            data.put("id",mAuth.getUid());
-//                                                            data.put("status","Hey there I am using Annonymous App");
-//                                                            firestore.collection("Users").document(mAuth.getUid()).set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                                @Override
-//                                                                public void onComplete(@NonNull Task<Void> task) {
-//
-//                                                                    sendToMAin();
-////                                                                    progressBar.setVisibility(View.INVISIBLE);
-//                                                                    dialog.dismiss();
-//
-//                                                                }
-//                                                            }).addOnFailureListener(new OnFailureListener() {
-//                                                                @Override
-//                                                                public void onFailure(@NonNull Exception e) {
-//                                                                    Toast.makeText(registerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                                    dialog.dismiss();
-//                                                                }
-//                                                            });
-//
-//                                                        }
-//                                                    }).addOnFailureListener(new OnFailureListener() {
-//                                                        @Override
-//                                                        public void onFailure(@NonNull Exception e) {
-//                                                            Toast.makeText(registerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                            dialog.dismiss();
-//                                                        }
-//                                                    });
-//
-//                                                }
-//                                            }).addOnFailureListener(new OnFailureListener() {
-//                                                @Override
-//                                                public void onFailure(@NonNull Exception e) {
-//                                                    Toast.makeText(registerActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-//                                                    dialog.dismiss();
-//                                                }
-//                                            });
-
-
-                                            //=======================================================================================================================
                                             Bitmap image_bitmap = null;
                                             try {
                                                 image_bitmap = new Compressor(registerActivity.this)
@@ -218,24 +198,6 @@ public class registerActivity extends AppCompatActivity {
                                                                             data.put("email",userEmail);
                                                                             data.put("image",image_download);
                                                                             data.put("thumb_image",thumb_download);
-//                                                                            firestore.collection("Users").document(mAuth.getUid()).set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                                                @Override
-//                                                                                public void onComplete(@NonNull Task<Void> task) {
-////                                                                                                                    progressBar.setVisibility(View.INVISIBLE);
-//                                                                                    dialog.dismiss();
-//
-//                                                                                    Toast.makeText(registerActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-//                                                                                    sendToMAin();
-//
-//
-//                                                                                }
-//                                                                            }).addOnFailureListener(new OnFailureListener() {
-//                                                                                @Override
-//                                                                                public void onFailure(@NonNull Exception e) {
-//                                                                                    Toast.makeText(registerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                                                    dialog.dismiss();
-//                                                                                }
-//                                                                            });
                                                                             databaseReference.child(mAuth.getUid()).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                                 @Override
                                                                                 public void onComplete(@NonNull Task<Void> task) {
@@ -296,8 +258,57 @@ public class registerActivity extends AppCompatActivity {
                     }
                 }
                 else{
-                    Toast.makeText(registerActivity.this, "Please select profile image", Toast.LENGTH_SHORT).show();
-                }
+//                    Toast.makeText(registerActivity.this, "Please select profile image", Toast.LENGTH_SHORT).show();
+                    final String username=name.getText().toString();
+                    final String userEmail=email.getText().toString();
+                    String usserPassword=password.getText().toString();
+                    if(!TextUtils.isEmpty(username) && !TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(usserPassword)){
+//                        progressBar.setVisibility(View.VISIBLE);
+                        dialog.setTitle("SignUp");
+                        dialog.setMessage("Signing you up... ");
+                        dialog.show();
+                        mAuth.createUserWithEmailAndPassword(userEmail, usserPassword)
+                                .addOnCompleteListener(registerActivity.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            String token_id= FirebaseInstanceId.getInstance().getToken();
+                                            Map<String,Object> data=new HashMap<>();
+                                            data.put("name",username);
+                                            data.put("status","Hey there i am using Annonymous app");
+                                            data.put("token",token_id);
+                                            data.put("id",mAuth.getUid());
+                                            data.put("email",userEmail);
+                                            data.put("image","");
+                                            data.put("thumb_image","");
+                                            data.put("intImage",profImg2);
+                                            databaseReference.child(mAuth.getUid()).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        dialog.dismiss();
+//
+                                                        Toast.makeText(registerActivity.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                                                        sendToMAin();
+                                                    }else{
+                                                        Toast.makeText(registerActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        dialog.dismiss();
+                                                    }
+                                                }
+                                            });
+                                        }
+                                        else {
+//                                            Snackbar.make(v,task.getException().toString(),Snackbar.LENGTH_LONG).show();
+//                                            progressBar.setVisibility(View.INVISIBLE);
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                });
+                    }
+                    else{
+                        Toast.makeText(registerActivity.this, "Please enter valid data", Toast.LENGTH_SHORT).show();
+                    }
+                }*/
 
             }
         });

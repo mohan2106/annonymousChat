@@ -6,10 +6,13 @@
     <color name="colorGreen">#2b9e21</color>
     <color name="colorYellow">#FA7502</color>
     <color name="colorSecondary">#f5a422</color>
+    <color name="colorLightRed">#FA5447</color>
     <color name="colorYellowLight">#FF9800</color>
+    <color name="colorLightGreen">#64FA6B</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGray">#636262</color>
     <color name="colorGreenDark">#38b50e</color>
+    <color name="colorCommentBack">#dfe3ee</color>
     <color name="colorGreenLight">#4CCE05</color>
 </resources>

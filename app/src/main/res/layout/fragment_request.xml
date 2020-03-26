@@ -17,30 +17,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="3sp"
-                android:background="@color/colorPrimary"
-                android:orientation="vertical">
+                android:orientation="horizontal">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:id="@+id/orgText"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Top Councellors of "
+                    android:layout_marginTop="0sp"
                     android:padding="10sp"
-                    android:text="Councellors of your college"
-
-                    android:textColor="@color/colorWhite"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/horizontalRecyclerView"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+                    android:textColor="@color/colorBlack"/>
+                <TextView
+                    android:id="@+id/orgName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:text="IIT_GUWAHATI"/>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Top Mentors of your college"
-                android:layout_marginTop="0sp"
-                android:padding="10sp"
-                android:textColor="@color/colorBlack"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/vericleRecyclerView"

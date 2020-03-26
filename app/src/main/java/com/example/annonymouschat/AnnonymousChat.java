@@ -34,11 +34,10 @@ public class AnnonymousChat extends Application {
         built.setIndicatorsEnabled(true);
         built.setLoggingEnabled(true);
         Picasso.setSingletonInstance(built);
-
         mAuth = FirebaseAuth.getInstance();
+
         if(mAuth.getUid() != null){
             mUserData = FirebaseDatabase.getInstance().getReference().child("User").child(mAuth.getUid());
-
             mUserData.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -47,9 +46,7 @@ public class AnnonymousChat extends Application {
                         mUserData.child("lastSeen").onDisconnect().setValue(ServerValue.TIMESTAMP);
                         mUserData.child("online").setValue("true");
                     }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 

@@ -18,12 +18,16 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreen"></activity>
+        <activity android:name=".UniversityActivity"></activity>
+        <activity android:name=".profileImages" />
+        <activity android:name=".writeThread" />
+        <activity android:name=".singleThreadActivity" />
+        <activity android:name=".SplashScreen" />
         <activity
             android:name=".chatActivity"
             android:configChanges="orientation"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".profileActivity"
             android:configChanges="orientation"

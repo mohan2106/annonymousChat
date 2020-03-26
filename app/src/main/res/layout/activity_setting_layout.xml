@@ -22,7 +22,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:title="Profile" />
 
-
     </com.google.android.material.appbar.AppBarLayout>
 
 
@@ -64,22 +63,6 @@
             android:hint="Name"
             android:inputType="text"
             android:padding="16sp" />
-        />
-
-        <EditText
-            android:id="@+id/register_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16sp"
-            android:drawableRight="@drawable/ic_edit_black_24dp"
-            android:drawableTint="@color/colorGray"
-            android:layout_marginTop="16sp"
-            android:layout_marginEnd="16sp"
-            android:background="@drawable/edit_text_back"
-            android:hint="Sattus"
-            android:inputType="textEmailAddress"
-            android:padding="16sp" />
-
 
         <Button
             android:id="@+id/update_btn"
